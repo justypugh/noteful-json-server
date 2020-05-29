@@ -1,13 +1,31 @@
-const jsonServer = require('json-server')
-const db = require('./db')
+require('dotenv').config();
+const express = require('express')
+const morgan = require('morgan')
+const cors = require('cors')
+const helmet = require('helmet')
+const noteRouter = require('./src/note-services/note-router')
+const folderRouter = require('./src/folder-services/folder-router')
+const knex = require('knex')
+const { PORT, DB_URL, NODE_ENV } = require('./config')
 
-const server = jsonServer.create()
-const router = jsonServer.router(db())
-const middlewares = jsonServer.defaults()
+const app = express()
 
-server.use(middlewares)
-server.use(router)
+app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
+  skip: () => NODE_ENV === 'test'
+}))
+app.use(cors())
+app.use(helmet())
 
-server.listen(9090, () => {
-  console.log('Noteful json-server started at http://localhost:9090')
+app.use('/notes', noteRouter)
+app.use('/folders', folderRouter)
+
+const db = knex({
+  client: 'pg',
+  connection: DB_URL,
+})
+
+app.set('db', db)
+
+app.listen(PORT, () => {
+  console.log(`Server listening at http://localhost:${PORT}`)
 })

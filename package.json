@@ -5,12 +5,27 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "migrate": "postgrator --config postgrator-config.js",
+    "migrate:test": "env NODE_ENV=test npm run migrate"
   },
   "author": "Thomas `tomatao` Hudspith-Tatham <iammotivated@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "faker": "^4.1.0",
-    "json-server": "^0.14.0"
+    "helmet": "^3.22.0",
+    "json-server": "^0.14.0",
+    "knex": "^0.21.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
+    "path": "^0.12.7",
+    "pg": "^8.2.1",
+    "postgrator": "^4.0.0"
+  },
+  "devDependencies": {
+    "postgrator-cli": "^3.2.0"
   }
 }
