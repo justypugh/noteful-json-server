@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "migrate": "postgrator --config postgrator-config.js",
-    "migrate:test": "env NODE_ENV=test npm run migrate"
+    "migrate:test": "env NODE_ENV=test npm run migrate",
+    "migrate:production": "env SSL=true DATABASE_URL=$(heroku config:get DATABASE_URL) npm run migrate",
+    "predeploy": "npm audit && npm run migrate:production",
+    "deploy": "git push heroku master"
   },
   "author": "Thomas `tomatao` Hudspith-Tatham <iammotivated@gmail.com>",
   "license": "MIT",

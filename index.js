@@ -6,7 +6,7 @@ const helmet = require('helmet')
 const noteRouter = require('./src/note-services/note-router')
 const folderRouter = require('./src/folder-services/folder-router')
 const knex = require('knex')
-const { PORT, DB_URL, NODE_ENV } = require('./config')
+const { PORT, DATABASE_URL, NODE_ENV } = require('./config')
 
 const app = express()
 
@@ -21,7 +21,7 @@ app.use('/folders', folderRouter)
 
 const db = knex({
   client: 'pg',
-  connection: DB_URL,
+  connection: DATABASE_URL,
 })
 
 app.set('db', db)
